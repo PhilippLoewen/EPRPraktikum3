@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <time.h>
+
 
 // Aufgabe 1: Währungsumrechnung
 
@@ -86,12 +86,35 @@ int tageImMonat(int jahr, int monat)
     return anzahlTage;
 }
 
+int pruefeDatum(int jahr, int monat, int tag)
+{
+    int gueltig = 1;
+    if (!(monat >= 1 && monat <= monateImJahr(jahr)))
+        gueltig = 0;
+    if (tag > tageImMonat(jahr, monat) || tag < 1)
+        gueltig = 0;
+    return gueltig;
+}
+
+int tageBisWeihnachten(int jahr, int monat, int tag)
+{
+    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, i = 0, j,k;
+    if (tmpMonat == 12 && tmpTag > 24)
+        warSchon = 1;
+
+    for (tmpJahr = jahr; tmpJahr <= jahr + warSchon; tmpJahr++)
+    {
+        for (tmpMonat = monat; tmpMonat <= 12; tmpMonat++)
+    }
+}
+
 
 int main(int argc, char** argv)
 {
     double eingabe, euro, dollar;
     int anfang,ende , schrittweite, auswahl = 99, beenden = 0;
-
+    int jahr = 0, monat = 0, tag = 0;
+    printf("Test\n");
 
     do {
         switch (auswahl)
@@ -109,6 +132,14 @@ int main(int argc, char** argv)
                 scanf("%d%d%d",&anfang,&ende,&schrittweite);
                 printTable(anfang, ende, schrittweite);
                 break;
+            case 3:
+                printf("Bitte geben Sie ein Datum in der Form \"YYYY MM DD\" ein!\n");
+                scanf("%d%d%d", &jahr, &monat, &tag);
+                if (pruefeDatum(jahr, monat, tag) == 1)
+                    printf("\nDas Datum %d-%d-%d ist korrekt.\n",jahr,monat,tag);
+                else
+                    printf("\nDas Datum %d-%d-%d ist nicht korrekt.\n",jahr,monat,tag);
+                break;
             case 99:
                 break;
             case 0:
@@ -119,8 +150,10 @@ int main(int argc, char** argv)
                 break;
 
         }
-        printf("\nBitte treffen Sie Ihre Wahl:\n\t1\tWaehrungsumrechnung\n\t2\tWaehrungstabelle\n\t0\tEnde\n");
-
+        if (beenden == 1)
+            break;
+        printf("\nBitte treffen Sie Ihre Wahl:\n\t1\tWaehrungsumrechnung\n\t2\tWaehrungstabelle\n\t3\tDatum ueberpruefen\n\t0\tEnde\n");
     } while (scanf("%d",&auswahl) == 1 && beenden == 0);
     return 0;
 }
+
