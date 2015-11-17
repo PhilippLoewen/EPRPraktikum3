@@ -98,14 +98,28 @@ int pruefeDatum(int jahr, int monat, int tag)
 
 int tageBisWeihnachten(int jahr, int monat, int tag)
 {
-    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, i = 0, j,k;
+    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, anzahlTage;
     if (tmpMonat == 12 && tmpTag > 24)
         warSchon = 1;
 
     for (tmpJahr = jahr; tmpJahr <= jahr + warSchon; tmpJahr++)
     {
-        for (tmpMonat = monat; tmpMonat <= 12; tmpMonat++)
+        if (tmpJahr == jahr)
+            tmpMonat = monat;
+        else
+            tmpMonat = 1;
+        for (tmpMonat; tmpMonat <= 12; tmpMonat++)
+        {
+            if (tmpMonat == monat)
+                tmpTag = tag;
+            else
+                tmpTag = 1;
+            for (tmpTag; tmpTag <= tageImMonat(tmpJahr, tmpMonat); tmpTag++)
+                ++anzahlTage;
+
+        }
     }
+    return anzahlTage;
 }
 
 
@@ -113,7 +127,7 @@ int main(int argc, char** argv)
 {
     double eingabe, euro, dollar;
     int anfang,ende , schrittweite, auswahl = 99, beenden = 0;
-    int jahr = 0, monat = 0, tag = 0;
+    int jahr = 0, monat = 0, tag = 0, anzahlTage;
     printf("Test\n");
 
     do {
@@ -140,6 +154,12 @@ int main(int argc, char** argv)
                 else
                     printf("\nDas Datum %d-%d-%d ist nicht korrekt.\n",jahr,monat,tag);
                 break;
+            case 4:
+                printf("Bitte geben Sie ein Datum in der Form \"YYYY MM DD\" ein!\n");
+                scanf("%d%d%d", &jahr, &monat, &tag);
+                anzahlTage = tageBisWeihnachten(jahr, monat, tag);
+                printf("\nBis Weihnachten sind es noch %d Tage.\n");
+                break;
             case 99:
                 break;
             case 0:
@@ -150,9 +170,8 @@ int main(int argc, char** argv)
                 break;
 
         }
-        if (beenden == 1)
-            break;
-        printf("\nBitte treffen Sie Ihre Wahl:\n\t1\tWaehrungsumrechnung\n\t2\tWaehrungstabelle\n\t3\tDatum ueberpruefen\n\t0\tEnde\n");
+        if (beenden != 1)
+            printf("\nBitte treffen Sie Ihre Wahl:\n\t1\tWaehrungsumrechnung\n\t2\tWaehrungstabelle\n\t3\tDatum ueberpruefen\n\t4\tTage bis Weihnachten\n\t0\tEnde\n");
     } while (scanf("%d",&auswahl) == 1 && beenden == 0);
     return 0;
 }
