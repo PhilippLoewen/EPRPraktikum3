@@ -96,9 +96,11 @@ int pruefeDatum(int jahr, int monat, int tag)
     return gueltig;
 }
 
+
+
 int tageBisWeihnachten(int jahr, int monat, int tag)
 {
-    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, anzahlTage;
+    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, anzahlTage = 0;
     if (tmpMonat == 12 && tmpTag > 24)
         warSchon = 1;
 
@@ -115,7 +117,7 @@ int tageBisWeihnachten(int jahr, int monat, int tag)
             else
                 tmpTag = 1;
             for (tmpTag; tmpTag <= tageImMonat(tmpJahr, tmpMonat); tmpTag++)
-                ++anzahlTage;
+                anzahlTage += 1;
 
         }
     }
@@ -158,7 +160,7 @@ int main(int argc, char** argv)
                 printf("Bitte geben Sie ein Datum in der Form \"YYYY MM DD\" ein!\n");
                 scanf("%d%d%d", &jahr, &monat, &tag);
                 anzahlTage = tageBisWeihnachten(jahr, monat, tag);
-                printf("\nBis Weihnachten sind es noch %d Tage.\n");
+                printf("\nBis Weihnachten sind es noch %d Tage.\n", anzahlTage);
                 break;
             case 99:
                 break;
