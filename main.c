@@ -100,7 +100,7 @@ int pruefeDatum(int jahr, int monat, int tag)
 
 int tageBisWeihnachten(int jahr, int monat, int tag)
 {
-    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, anzahlTage = 0;
+    int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, anzahlTage = 0, endTag = 0;
     if (tmpMonat == 12 && tmpTag > 24)
         warSchon = 1;
 
@@ -116,6 +116,7 @@ int tageBisWeihnachten(int jahr, int monat, int tag)
                 tmpTag = tag;
             else
                 tmpTag = 1;
+
             for (tmpTag; tmpTag <= tageImMonat(tmpJahr, tmpMonat); tmpTag++)
                 anzahlTage += 1;
 
@@ -159,8 +160,15 @@ int main(int argc, char** argv)
             case 4:
                 printf("Bitte geben Sie ein Datum in der Form \"YYYY MM DD\" ein!\n");
                 scanf("%d%d%d", &jahr, &monat, &tag);
-                anzahlTage = tageBisWeihnachten(jahr, monat, tag);
-                printf("\nBis Weihnachten sind es noch %d Tage.\n", anzahlTage);
+                if (!pruefeDatum(jahr,monat, tag))
+                {
+                    printf("Das Datum ist nicht korrekt");
+                }
+                else
+                {
+                    anzahlTage = tageBisWeihnachten(jahr, monat, tag);
+                    printf("\nBis Weihnachten sind es noch %d Tage.\n", anzahlTage);
+                }
                 break;
             case 99:
                 break;
@@ -172,9 +180,11 @@ int main(int argc, char** argv)
                 break;
 
         }
-        if (beenden != 1)
-            printf("\nBitte treffen Sie Ihre Wahl:\n\t1\tWaehrungsumrechnung\n\t2\tWaehrungstabelle\n\t3\tDatum ueberpruefen\n\t4\tTage bis Weihnachten\n\t0\tEnde\n");
-    } while (scanf("%d",&auswahl) == 1 && beenden == 0);
+        if (beenden == 1)
+            break;
+
+        printf("\nBitte treffen Sie Ihre Wahl:\n\t1\tWaehrungsumrechnung\n\t2\tWaehrungstabelle\n\t3\tDatum ueberpruefen\n\t4\tTage bis Weihnachten\n\t0\tEnde\n");
+    } while (scanf("%d",&auswahl) == 1);
     return 0;
 }
 
