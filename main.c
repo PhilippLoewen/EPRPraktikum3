@@ -18,9 +18,11 @@ double dollar2euro(double dollar)
 
 // Aufgabe 2: Währungstabelle
 
-void printTable(int anfang, int ende, int schrittweite)
+void printTable(double anfang, double ende, double schrittweite)
 {
-    int i;
+    double i;
+    if(schrittweite <= 0)
+        return;
 
     // --------
     // Euro2Dollar table
@@ -32,7 +34,7 @@ void printTable(int anfang, int ende, int schrittweite)
 
     // Body
     for(i = anfang; i <= ende; i += schrittweite)
-        printf("%8d.00  |  %8.2f\n", i, euro2dollar(i));
+        printf("%8.2lf  |  %8.2f\n", i, euro2dollar(i));
 
 
     // --------
@@ -45,7 +47,7 @@ void printTable(int anfang, int ende, int schrittweite)
 
     // Body
     for(i = anfang; i <= ende; i += schrittweite)
-        printf("%8d.00  |  %8.2f\n", i, dollar2euro(i));
+        printf("%8.2lf  |  %8.2f\n", i, dollar2euro(i));
 
     printf("\n\n");
 
@@ -128,8 +130,8 @@ int tageBisWeihnachten(int jahr, int monat, int tag)
 
 int main(int argc, char** argv)
 {
-    double eingabe, euro, dollar;
-    int anfang,ende , schrittweite, auswahl = 99, beenden = 0;
+    double eingabe, euro, dollar, anfang, ende , schrittweite;
+    int  auswahl = 99, beenden = 0;
     int jahr = 0, monat = 0, tag = 0, anzahlTage;
     printf("Test\n");
 
@@ -145,8 +147,12 @@ int main(int argc, char** argv)
                 printf("\ndollar2euro:%lf\n", euro);
                 break;
             case 2:
-                printf("\nBitte geben Sie einen Anfangswert, einen Endwert und eine Schrittweite ein!\n");
-                scanf("%d%d%d",&anfang,&ende,&schrittweite);
+                printf("\nBitte geben Sie einen Anfangswert ein!\n");
+                scanf("%lf", &anfang);
+                printf("\nBitte geben Sie einen Endwert ein!\n");
+                scanf("%lf", &ende);
+                printf("\nBitte geben Sie eine Schrittweite ein!\n");
+                scanf("%lf", &schrittweite);
                 printTable(anfang, ende, schrittweite);
                 break;
             case 3:
