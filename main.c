@@ -102,6 +102,9 @@ int pruefeDatum(int jahr, int monat, int tag)
 
 int tageBisWeihnachten(int jahr, int monat, int tag)
 {
+    if (pruefeDatum(jahr,monat,tag) == 0)
+        return -1;
+
     int tmpJahr = jahr, tmpMonat = monat, tmpTag = tag,warSchon = 0, anzahlTage = 0, endTag = 0;
     if (tmpMonat == 12 && tmpTag > 24)
         warSchon = 1;
